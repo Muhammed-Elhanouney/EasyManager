@@ -14,7 +14,6 @@ class PostController extends Controller
     {
         //
         return redirect('posts/show');
-
     }
 
     /**
@@ -37,6 +36,10 @@ class PostController extends Controller
         // $post->title = $request->title;
         // $post->body = $request->body;
         // $post->save();
+        $request->validate([
+            'title' => 'required|max:255',
+            'body' => 'required',
+        ]);
 
         Post::create([
             'title' => $request->title,
@@ -80,6 +83,10 @@ class PostController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $request->validate([
+            'title' => 'required|unique:posts|max:255',
+            'body' => 'required',
+        ]);
         // return $id;
         $post = Post::find($id);
         $post->title = $request->title;
